@@ -22,10 +22,9 @@ async function displayArtists(artists) {
     const html = /*html*/ `
       <div class="grid-item">
         <img class="image" src=${artist.image} alt="${artist.name}"/>
-        <div>${artist.name}</div>
-        <div>${artist.birthdate}</div>
-        <div>${artist.gender}</div>
-          <div class="btns-container">
+        <div><h4>${artist.name}</h4>
+        <h5>Gender: ${artist.gender}</h5></div>
+    <div class="btns-container">
         <button id="btn-delete">Delete</button>
         <button id="btn-edit">Edit</button>
     </div>
@@ -49,12 +48,13 @@ async function displayTracks(tracks) {
 
   for (const track of tracks) {
     const html = /*html*/ `
-      <div class="grid-item">
-        <img class="image" src=${track.image} alt="${track.name}"/>
-        <div>${track.name}</div>
-        <div>${track.birthdate}</div>
-        <div>${track.gender}</div>
-      </div>
+        <tr>
+          <td><h4> ${track.name}</h4></td>
+          <td>${track.TrackName}</td>
+          <td>${track.ReleaseDate}</td>
+        </tr>
+        
+        
     `;
 
     tbody.insertAdjacentHTML("beforeend", html);
@@ -73,12 +73,11 @@ async function displayAlbums(albums) {
 
   for (const album of albums) {
     const html = /*html*/ `
-      <div class="grid-item">
-        <img class="image" src=${album.image} alt="${album.name}"/>
-        <div>${album.name}</div>
-        <div>${album.birthdate}</div>
-        <div>${album.gender}</div>
-      </div>
+       <tr>
+          <td><h4> ${album.name}</h4></td>
+          <td>${album.genre}</td>
+          <td>${album.YearPublished}</td>
+        </tr>
     `;
 
     tbody.insertAdjacentHTML("beforeend", html);
