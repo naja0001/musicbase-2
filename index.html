@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DATA</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="appName">MusicBase</h1>
+    </header>
+
+    <form id="searchform">
+      <div class="searchContainer">
+        <input
+          type="search"
+          placeholder="Search for music..."
+          id="searchInput"
+        />
+
+        <label for="searchType">Sort by</label>
+        <select id="searchType">
+          <option value="artistName">Artist</option>
+          <option value="albumName">Album</option>
+          <option value="songName">Song</option>
+        </select>
+      </div>
+    </form>
+
+    <div>
+      <h2 class="data">Artists</h2>
+      <section id="artists-container" class="grid-container"></section>
+
+      <h2 class="data">Albums</h2>
+      <section id="albums-container" class="grid-container"></section>
+
+      <h2 class="data">Songs</h2>
+      <section id="tracks-container" class="grid-container"></section>
+    </div>
+    <footer>
+      <p>by Naima, Mariam og Aisha</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
