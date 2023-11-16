@@ -7,7 +7,7 @@ import tracksRouter from "./Routes/tracks.js";
 import albumsRouter from "./Routes/albums.js";
 
 const app = express();
-const port = process.env.PORT || 3337;
+const port = process.env.PORT || 3336;
 
 app.use(express.json());
 app.use(cors());

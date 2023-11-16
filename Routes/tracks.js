@@ -7,10 +7,12 @@ const tracksRouter = Router();
 // READ all tracks
 tracksRouter.get("/", async (request, response) => {
   const queryString = /*sql*/ `
-  SELECT * FROM tracks
-JOIN artist_tracks ON tracks.TrackID = artist_tracks.trackId
-JOIN artists ON artist_tracks.artistId = artists.id
-ORDER BY artists.name;`;
+  SELECT *
+      FROM tracks
+      JOIN artists_tracks ON tracks.id = artists_tracks.track_id
+      JOIN artists ON artists_tracks.artist_id = artists.id
+      ORDER BY artists.name;
+      `;
 
   connection.query(queryString, (error, results) => {
     if (error) {
@@ -25,10 +27,12 @@ ORDER BY artists.name;`;
 tracksRouter.get("/:id", (request, response) => {
   const id = request.params.id;
   const queryString = /*sql */ `
-   SELECT * FROM tracks
-    JOIN artist_tracks ON tracks.TrackID = artist_tracks.trackId
-    JOIN artists ON artist_tracks.artistId = artists.id
-    WHERE tracks.TrackID = ?;
+   SELECT *
+FROM artists
+JOIN artists_tracks ON artists.id = artists_tracks.artist_id
+JOIN tracks ON artists_tracks.track_id = tracks.id
+WHERE tracks.id = ?;
+
   `;
 
   const values = [id];

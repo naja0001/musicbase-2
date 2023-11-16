@@ -47,8 +47,8 @@ artistsRouter.get("/:id/albums", (req, res) => {
   const queryString = /*sql*/ `
     SELECT * FROM artists, albums 
     WHERE artists.id=? AND
-    albums.albumID = artists.id
-    ORDER BY albums.AlbumTitle;`; // sql query
+    albums.id = artists.id
+    ORDER BY albums.title;`; // sql query
 
   const values = [id];
 
@@ -66,9 +66,9 @@ artistsRouter.get("/:id/albums", (req, res) => {
 // Create a new artist
 artistsRouter.post("/", (req, res) => {
   try {
-    const { name, genre, image, birthdate, gender } = req.body;
+    const { name, image, birthdate, gender } = req.body;
 
-    if (!name || !genre || !image || !birthdate || !gender) {
+    if (!name || !image || !birthdate || !gender) {
       return res.status(400).json({ error: "More info about artist required" });
     }
 
@@ -89,11 +89,11 @@ artistsRouter.post("/", (req, res) => {
 
       // Create a new artist in the database
       const insertQuery =
-        "INSERT INTO `artists` (name, genre, image, birthdate, gender) VALUES (?, ?, ?, ?, ?)";
+        "INSERT INTO `artists` (name, image, birthdate, gender) VALUES (?, ?, ?, ?, ?)";
 
       connection.query(
         insertQuery,
-        [name, genre, image, birthdate, gender],
+        [name, image, birthdate, gender],
         (insertErr, result) => {
           if (insertErr) {
             console.log(insertErr);
@@ -123,7 +123,7 @@ artistsRouter.put("/:id", (request, response) => {
     const artistId = request.params.id;
 
     // Udtræk opdaterede kunstneroplysninger fra anmodningens krop
-    const { name, genre, image, birthdate, gender } = request.body;
+    const { name, image, birthdate, gender } = request.body;
 
     if (!name) {
       return response.status(400).json({ error: "ArtistName is required" });
@@ -132,13 +132,13 @@ artistsRouter.put("/:id", (request, response) => {
     // Opdater kunstneren i artists-tabellen
     const updateQuery = /*sql*/ `
       UPDATE artists
-      SET name = ?, genre = ?, image = ?,  birthdate = ?, gender = ?
+      SET name = ?, image = ?,  birthdate = ?, gender = ?
       WHERE artists.id = ?;
       `;
 
     connection.query(
       updateQuery,
-      [name, genre, image, birthdate, gender, artistId],
+      [name, image, birthdate, gender, artistId],
       (updateErr) => {
         if (updateErr) {
           console.log(updateErr);

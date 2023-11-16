@@ -19,17 +19,10 @@
           placeholder="Search for music..."
           id="searchInput"
         />
-
-        <label for="searchType">Sort by</label>
-        <select id="searchType">
-          <option value="artistName">Artist</option>
-          <option value="albumName">Album</option>
-          <option value="songName">Song</option>
-        </select>
       </div>
     </form>
 
-    <div>
+    <div id="container">
       <h2 class="data">Artists</h2>
       <section id="artists-container" class="grid-container"></section>
 
@@ -37,9 +30,9 @@
       <table>
         <thead>
           <tr>
-            <th><h3>Name</h3></th>
-            <th><h3>Genre</h3></th>
-            <th><h3>Year Published</h3></th>
+            <th><h3>Artist</h3></th>
+            <th><h3>Album Name</h3></th>
+            <th><h3>Release date</h3></th>
           </tr>
         </thead>
         <tbody id="albums-container"></tbody>

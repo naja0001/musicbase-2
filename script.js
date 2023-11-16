@@ -1,17 +1,19 @@
 "use strict";
 
+let allArtists, allAlbums, allTracks;
+
 window.addEventListener("load", start);
 
-function start() {
-  GetArtists();
-  GetAlbums();
-  GetTracks();
+async function start() {
+  await GetArtists();
+  await GetAlbums();
+  await GetTracks();
 }
 
 async function GetArtists() {
-  const response = await fetch(`http://localhost:3337/artists`);
-  const artists = await response.json();
-  displayArtists(artists);
+  const response = await fetch(`http://localhost:3336/artists`);
+  allArtists = await response.json();
+  displayArtists(allArtists);
 }
 
 async function displayArtists(artists) {
@@ -24,12 +26,11 @@ async function displayArtists(artists) {
         <img class="image" src=${artist.image} alt="${artist.name}"/>
         <div><h4>${artist.name}</h4>
         <h5>Gender: ${artist.gender}</h5></div>
-    <div class="btns-container">
-        <button id="btn-delete">Delete</button>
-        <button id="btn-edit">Edit</button>
-    </div>
+        <div class="btns-container">
+          <button id="btn-delete">Delete</button>
+          <button id="btn-edit">Edit</button>
+        </div>
       </div>
-     
     `;
 
     tbody.insertAdjacentHTML("beforeend", html);
@@ -37,9 +38,9 @@ async function displayArtists(artists) {
 }
 
 async function GetTracks() {
-  const response = await fetch(`http://localhost:3337/tracks`);
-  const tracks = await response.json();
-  displayTracks(tracks);
+  const response = await fetch(`http://localhost:3336/tracks`);
+  allTracks = await response.json();
+  displayTracks(allTracks);
 }
 
 async function displayTracks(tracks) {
@@ -48,13 +49,11 @@ async function displayTracks(tracks) {
 
   for (const track of tracks) {
     const html = /*html*/ `
-        <tr>
-          <td><h4> ${track.name}</h4></td>
-          <td>${track.TrackName}</td>
-          <td>${track.ReleaseDate}</td>
-        </tr>
-        
-        
+      <tr>
+        <td><h4> ${track.name}</h4></td>
+        <td>${track.title}</td>
+        <td>${track.release_date}</td>
+      </tr>
     `;
 
     tbody.insertAdjacentHTML("beforeend", html);
@@ -62,9 +61,9 @@ async function displayTracks(tracks) {
 }
 
 async function GetAlbums() {
-  const response = await fetch(`http://localhost:3337/albums`);
-  const albums = await response.json();
-  displayAlbums(albums);
+  const response = await fetch(`http://localhost:3336/albums`);
+  allAlbums = await response.json();
+  displayAlbums(allAlbums);
 }
 
 async function displayAlbums(albums) {
@@ -73,13 +72,40 @@ async function displayAlbums(albums) {
 
   for (const album of albums) {
     const html = /*html*/ `
-       <tr>
-          <td><h4> ${album.name}</h4></td>
-          <td>${album.genre}</td>
-          <td>${album.YearPublished}</td>
-        </tr>
+      <tr>
+        <td class="image2"><img src="${album.image}"></td>
+        <td><h4> ${album.title}</h4></td>
+        <td>${album.release_date}</td>
+      </tr>
     `;
 
     tbody.insertAdjacentHTML("beforeend", html);
+  }
+}
+function search() {
+  console.log("yaay");
+  const searchInput = document
+    .querySelector("#searchInput")
+    .value.toLowerCase();
+
+  if (allArtists) {
+    const filteredArtists = allArtists.filter((artist) =>
+      artist.name.toLowerCase().includes(searchInput)
+    );
+    displayArtists(filteredArtists);
+  }
+
+  if (allAlbums) {
+    const filteredAlbums = allAlbums.filter((album) =>
+      album.title.toLowerCase().includes(searchInput)
+    );
+    displayAlbums(filteredAlbums);
+  }
+
+  if (allTracks) {
+    const filteredTracks = allTracks.filter((track) =>
+      track.title.toLowerCase().includes(searchInput)
+    );
+    displayTracks(filteredTracks);
   }
 }
